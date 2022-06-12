@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,15 +11,24 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(
         color: Colors.deepOrangeAccent.shade700,
+        width: double.infinity,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(height: 20),
             text('Let the CRUD begin', 16, Colors.white),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+            Container(),
+            const Spacer(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.delete)),
+              ],
+            ),
           ],
         ),
       ),

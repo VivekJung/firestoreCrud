@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "114117632565",
+    "project_id": "cool-crud-firestore",
+    "storage_bucket": "cool-crud-firestore.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:114117632565:android:ed048b9891b5b3a527c77c",
+        "android_client_info": {
+          "package_name": "com.example.firestore_crud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "114117632565-i2qr4veg7ssvj0ra1tsnggumorvu5gav.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgyAOpXkei6p8CNpi3cNoHGhcLVDTytRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "114117632565-i2qr4veg7ssvj0ra1tsnggumorvu5gav.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
