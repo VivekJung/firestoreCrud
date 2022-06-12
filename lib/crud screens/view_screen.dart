@@ -17,7 +17,7 @@ class _ViewScreenState extends State<ViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.black12,
       child: StreamBuilder(
         stream: heroes.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
@@ -28,27 +28,23 @@ class _ViewScreenState extends State<ViewScreen> {
                   final DocumentSnapshot docSnap =
                       streamSnapshot.data!.docs[idx];
                   return Card(
-                    margin: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(8),
                     child: ListTile(
+                      onLongPress: () {
+                        delete(docSnap.id, context);
+                      },
+                      selectedColor: Colors.amber,
                       leading: Text((idx + 1).toString()),
                       title: Text(docSnap['name']),
                       subtitle: Text(docSnap['power'].toString()),
-                      trailing: Column(
-                        children: [
-                          Flexible(
-                            child: IconButton(
-                                onPressed: () {
-                                  bottomSheet(context, docSnap);
-                                },
-                                icon: const Icon(Icons.edit)),
-                          ),
-                          Flexible(
-                            child: IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.delete)),
-                          ),
-                        ],
-                      ),
+                      trailing: IconButton(
+                          onPressed: () {
+                            edit(context, docSnap);
+                          },
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          )),
                     ),
                   );
                 });
@@ -61,8 +57,14 @@ class _ViewScreenState extends State<ViewScreen> {
     );
   }
 
-  Future<void> bottomSheet(context,
-      [DocumentSnapshot? documentSnapshot]) async {
+  Future<void> delete(String heroId, context) async {
+    await heroes.doc(heroId).delete();
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Hero sent back to home!')));
+  }
+
+  Future<void> edit(context, [DocumentSnapshot? documentSnapshot]) async {
     if (documentSnapshot != null) {
       _nameController.text = documentSnapshot['name'];
       _powerController.text = documentSnapshot['power'].toString();
@@ -106,6 +108,9 @@ class _ViewScreenState extends State<ViewScreen> {
                           .update({'name': name, 'power': power});
                       _nameController.text = '';
                       _powerController.text = '';
+
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('Hero status reviewed !!')));
                       Navigator.of(context).pop();
                     }
                   },

@@ -19,11 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    addNewHero() {}
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.greenAccent.shade400,
-        onPressed: () => addNewHero(),
+        onPressed: () => addNewHero(context),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
@@ -53,5 +52,57 @@ class _HomeScreenState extends State<HomeScreen> {
       text,
       style: TextStyle(fontSize: fontSize, color: txtColor ?? Colors.white),
     );
+  }
+
+  Future<void> addNewHero(context) async {
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext ctx) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 20,
+                left: 20,
+                right: 20,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: const InputDecoration(labelText: 'Name'),
+                ),
+                TextField(
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  controller: _powerController,
+                  decoration: const InputDecoration(
+                    labelText: 'Power',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  child: const Text('Add'),
+                  onPressed: () async {
+                    final String name = _nameController.text;
+                    final double? power =
+                        double.tryParse(_powerController.text);
+                    if (power != null) {
+                      await heroes.add({"name": name, "power": power});
+
+                      _nameController.text = '';
+                      _powerController.text = '';
+
+                      Navigator.of(context).pop();
+                    }
+                  },
+                )
+              ],
+            ),
+          );
+        });
   }
 }
